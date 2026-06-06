@@ -1,0 +1,246 @@
+/* Custom Styling for Laiman Lie Detector */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #0d0d13 linear-gradient(135deg, #0d0d13 0%, #1a0f2e 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    width: 90%;
+    max-width: 550px;
+    background: rgba(20, 20, 35, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 0, 128, 0.2);
+    padding: 40px 30px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 0, 128, 0.1);
+}
+
+.neon-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff007f;
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.6), 0 0 20px rgba(255, 0, 128, 0.3);
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: #00ffcc;
+    margin-bottom: 35px;
+    opacity: 0.8;
+}
+
+.screen {
+    transition: all 0.3s ease;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+input[type="text"], textarea {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
+    outline: none;
+    transition: 0.3s;
+}
+
+input[type="text"]:focus, textarea:focus {
+    border-color: #00ffcc;
+    box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+.start-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 14px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#createBtn {
+    background: linear-gradient(45deg, #ff007f, #ff0055);
+    color: #fff;
+}
+
+#joinBtn {
+    background: linear-gradient(45deg, #00ffcc, #00bfff);
+    color: #000;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 204, 0.3);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Room Link Copy Area */
+#roomLinkSection, #joinSection {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copy-box {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.copy-box input {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    text-align: center;
+    font-weight: bold;
+    color: #00ffcc;
+}
+
+#copyBtn {
+    background: #444;
+    color: #fff;
+    padding: 0 15px;
+}
+
+.waiting-text {
+    font-size: 0.85rem;
+    color: #ffaa00;
+    animation: blink 1.5s infinite;
+}
+
+/* Gameplay Styles */
+.players-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: rgba(255,255,255,0.05);
+    padding: 10px 20px;
+    border-radius: 50px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+#p1Display { color: #ff007f; }
+#p2Display { color: #00ffcc; }
+
+.status-alert {
+    color: #ffaa00;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.received-question {
+    background: rgba(255, 0, 128, 0.1);
+    border-left: 4px solid #ff007f;
+    padding: 15px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.asked-by-text {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 5px;
+}
+
+/* Scanning Overlay & Animation */
+#scanningOverlay {
+    position: relative;
+    background: rgba(0,0,0,0.4);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px dashed #00ffcc;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.scan-line {
+    width: 100%;
+    height: 3px;
+    background: #00ffcc;
+    box-shadow: 0 0 10px #00ffcc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: scan 2s linear infinite;
+}
+
+/* Result Box */
+.result-box {
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 20px;
+    margin: 25px 0;
+    border-radius: 12px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.truth-style {
+    background: rgba(0, 255, 204, 0.15);
+    color: #00ffcc;
+    border: 2px solid #00ffcc;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+}
+
+.lie-style {
+    background: rgba(255, 0, 85, 0.15);
+    color: #ff0055;
+    border: 2px solid #ff0055;
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+}
+
+/* Loaders & Keyframes */
+.pulse-loader {
+    width: 20px;
+    height: 20px;
+    background: #00ffcc;
+    border-radius: 50%;
+    margin: 15px auto;
+    animation: pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes blink { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+@keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }
+@keyframes pulse { 0% { transform: scale(0.8); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 1; } 100% { transform: scale(0.8); opacity: 0.5; } }

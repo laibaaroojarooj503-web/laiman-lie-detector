@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laiman Lie Detector</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for Cool Look -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Soft Background Piano Music -->
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <!-- Note: Aap apni marzi ka koi bhi soft piano mp3 link yahan daal sakti hain -->
+    </audio>
+
+    <div class="container">
+        <h1 class="neon-title">Laiman Lie Detector</h1>
+        <p class="subtitle">A Game of Truth and Love ❤️</p>
+
+        <!-- SCREEN 1: LOGIN & ROOM CREATION -->
+        <div id="lobbyScreen" class="screen">
+            <div class="input-group">
+                <input type="text" id="playerName" placeholder="Enter Your Name..." autocomplete="off" />
+                <input type="text" id="playerRelation" placeholder="Aap unke kya lagte hain? (e.g. Husband)" autocomplete="off" />
+            </div>
+            <div class="start-buttons">
+                <button id="createBtn">🔮 Create Room</button>
+                <button id="joinBtn">⚡ Join Game</button>
+            </div>
+            
+            <div id="roomLinkSection" class="hidden">
+                <p>Share this Room ID with your partner:</p>
+                <div class="copy-box">
+                    <input type="text" id="linkInput" readonly />
+                    <button id="copyBtn">Copy</button>
+                </div>
+                <p class="waiting-text">Waiting for partner to join...</p>
+            </div>
+
+            <div id="joinSection" class="hidden">
+                <input type="text" id="roomCodeInput" placeholder="Enter Room ID Here..." />
+                <button id="connectBtn">Connect Now</button>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: GAMEPLAY AREA -->
+        <div id="gameScreen" class="screen hidden">
+            <div class="players-info">
+                <span id="p1Display">Player 1</span> <span>vs</span> <span id="p2Display">Player 2</span>
+            </div>
+            
+            <div id="statusMessage" class="status-alert">Waiting...</div>
+
+            <!-- Question Box (Visible to Asker) -->
+            <div id="questionArea" class="hidden">
+                <h3>Ask your question:</h3>
+                <textarea id="questionInput" placeholder="Type your secret question here..."></textarea>
+                <button id="sendQuestionBtn">Send Question 📩</button>
+            </div>
+
+            <!-- Answer Box (Visible to Answerer) -->
+            <div id="answerArea" class="hidden">
+                <div class="received-question">
+                    <p><strong>Question:</strong> <span id="displayQuestion">...</span></p>
+                    <p class="asked-by-text">(Asked by: <span id="askerName"></span> - <span id="askerRelation"></span>)</p>
+                </div>
+                <h3>Your Answer:</h3>
+                <textarea id="answerInput" placeholder="Type your honest answer... (Lie detector is active 🕵️‍♂️)"></textarea>
+                <button id="sendAnswerBtn">Submit Answer 🔮</button>
+            </div>
+
+            <!-- Waiting State Screen -->
+            <div id="waitingState" class="hidden">
+                <p id="waitingStateText">Your partner is thinking...</p>
+                <div class="pulse-loader"></div>
+            </div>
+
+            <!-- Scanning Overlay -->
+            <div id="scanningOverlay" class="hidden">
+                <div class="scan-line"></div>
+                <p>Analyzing typing behavior, hesitation, and stress levels...</p>
+            </div>
+
+            <!-- Result Display -->
+            <div id="resultArea" class="hidden">
+                <h2>Detector Result:</h2>
+                <div id="resultBox" class="result-box"></div>
+                <button id="nextRoundBtn">Next Round 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Configuration (Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
