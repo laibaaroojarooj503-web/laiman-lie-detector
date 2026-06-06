@@ -1,4 +1,4 @@
-// Firebase Configured directly with Laiba's Real Project Keys
+// Laiba's Verified Real Firebase Configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCSGc-eCwnghv06dcofWeprRjVc9FevX6E",
     authDomain: "laiman-lie-detector.firebaseapp.com",
@@ -9,11 +9,10 @@ const firebaseConfig = {
     appId: "1:367202167732:web:65f7c32bfda6892fb862eb"
 };
 
-// Initialize Firebase
-if (firebaseConfig.apiKey) {
+// Properly Initialize Firebase for Version 8
+if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
-
 const database = firebase.database();
 
 // DOM Elements
@@ -60,8 +59,10 @@ let typingStartTime = 0;
 let keyStrokes = 0;
 
 function playMusic() {
-    bgMusic.volume = 0.2; // Soft background music
-    bgMusic.play().catch(e => console.log("Music waiting for interaction"));
+    if(bgMusic) {
+        bgMusic.volume = 0.2;
+        bgMusic.play().catch(e => console.log("Music waiting for tap/click"));
+    }
 }
 
 createBtn.addEventListener("click", () => {
@@ -82,12 +83,15 @@ createBtn.addEventListener("click", () => {
         answer: "",
         turn: "player1",
         detectorResult: ""
+    }).then(() => {
+        linkInput.value = roomId;
+        roomLinkSection.classList.remove("hidden");
+        joinSection.classList.add("hidden");
+        listenToRoom();
+    }).catch(err => {
+        alert("Database connection failed. Check your network!");
+        console.error(err);
     });
-
-    linkInput.value = roomId;
-    roomLinkSection.classList.remove("hidden");
-    joinSection.classList.add("hidden");
-    listenToRoom();
 });
 
 joinBtn.addEventListener("click", () => {
@@ -118,7 +122,7 @@ connectBtn.addEventListener("click", () => {
 copyBtn.addEventListener("click", () => {
     linkInput.select();
     document.execCommand("copy");
-    alert("Room ID Copied! Send this to your partner.");
+    alert("Room ID Copied! Send this to Numan.");
 });
 
 function listenToRoom() {
