@@ -53,7 +53,6 @@ let myName = "";
 let myRelation = "";
 let currentTurn = "player1";
 
-// Option B: Typing Behavior Radar Variables
 let backspaceCount = 0;
 let typingStartTime = 0;
 let keyStrokes = 0;
@@ -72,6 +71,7 @@ createBtn.addEventListener("click", () => {
 
     if (!myName) return alert("Please enter your name first!");
 
+    // Generates a random 4 digit room number
     roomId = "ROOM-" + Math.floor(1000 + Math.random() * 9000);
     myPlayerKey = "player1";
 
@@ -84,12 +84,18 @@ createBtn.addEventListener("click", () => {
         turn: "player1",
         detectorResult: ""
     }).then(() => {
+        // FIXED: Yeh sections ab screen par text box aur copy button saaf dikhayenge
         linkInput.value = roomId;
         roomLinkSection.classList.remove("hidden");
         joinSection.classList.add("hidden");
+        
+        // Hide name inputs and buttons so user can only see the Room ID box
+        document.querySelector(".input-group").classList.add("hidden");
+        document.querySelector(".start-buttons").classList.add("hidden");
+        
         listenToRoom();
     }).catch(err => {
-        alert("Database connection failed. Check your network!");
+        alert("Database connection failed!");
         console.error(err);
     });
 });
@@ -121,8 +127,9 @@ connectBtn.addEventListener("click", () => {
 
 copyBtn.addEventListener("click", () => {
     linkInput.select();
+    linkInput.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand("copy");
-    alert("Room ID Copied! Send this to Numan.");
+    alert("Room ID Copied: " + roomId);
 });
 
 function listenToRoom() {
@@ -130,19 +137,19 @@ function listenToRoom() {
         const data = snapshot.val();
         if (!data) return;
 
-        lobbyScreen.classList.add("hidden");
-        gameScreen.classList.remove("hidden");
+        // FIXED: Jab tak player 2 join nahi karta, screen ko game state mein lock nahi karenge
+        if (data.gameState !== "waiting") {
+            lobbyScreen.classList.add("hidden");
+            gameScreen.classList.remove("hidden");
+        } else {
+            // Stay on lobby screen to show Room ID to Player 1
+            p1Display.innerText = `${data.player1.name} (${data.player1.relation})`;
+            p2Display.innerText = "Waiting...";
+        }
 
-        p1Display.innerText = data.player1 ? `${data.player1.name} (${data.player1.relation})` : "Waiting...";
-        p2Display.innerText = data.player2 ? `${data.player2.name} (${data.player2.relation})` : "Waiting...";
         currentTurn = data.turn;
 
-        if (data.gameState === "waiting") {
-            statusMessage.innerText = "Waiting for partner...";
-            showSubScreen(waitingState);
-            waitingStateText.innerText = "Waiting for Player 2 to enter the Room ID...";
-        } 
-        else if (data.gameState === "questioning") {
+        if (data.gameState === "questioning") {
             resultArea.classList.add("hidden");
             scanningOverlay.classList.add("hidden");
             if (currentTurn === myPlayerKey) {
@@ -216,7 +223,6 @@ sendAnswerBtn.addEventListener("click", () => {
     let totalTimeTaken = (Date.now() - typingStartTime) / 1000;
     let isLie = false;
 
-    // Option B Algorithmic Check (Erase count & Time vs Word length)
     if (backspaceCount >= 4) isLie = true; 
     else if (totalTimeTaken > 12 && ansText.length < 15) isLie = true;
 
